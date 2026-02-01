@@ -9,42 +9,41 @@
 <body>
   <div class="wrap">
     <header class="top">
-      <div class="left">
+      <div>
         <h1>Chemo Dash</h1>
-        <p class="sub">A 3-lane arcade runner. Make it to treatment while real-life delays stack up.</p>
+        <p class="sub">Make it to your chemo appointment. Delays stack up.</p>
       </div>
 
       <div class="hud">
         <div class="pill">Score <span id="score">0</span></div>
         <div class="pill">Coins <span id="coins">0</span></div>
-        <div class="pill">Helps <span id="helps">0</span></div>
+        <div class="pill">Shield <span id="shield">1</span></div>
         <div class="pill">Time <span id="time">60</span>s</div>
       </div>
     </header>
 
     <main class="main">
-      <div class="canvasCard">
-        <canvas id="game" width="960" height="540"></canvas>
+      <div class="canvasCard" id="gameWrap">
+        <div id="game"></div>
       </div>
 
       <div class="legend">
-        <span class="tag">🚌 Bus delay = slows you</span>
-        <span class="tag">🚦 Traffic = blocker</span>
-        <span class="tag">📄 Paperwork = stun</span>
-        <span class="tag">👶 Childcare = lane trap</span>
-        <span class="tag good">💼 Help = shield</span>
-        <span class="tag good">🪙 Coin = score</span>
+        <span class="tag">TRAFFIC + INSURANCE: jump</span>
+        <span class="tag">PAPERWORK: slide</span>
+        <span class="tag">BUS DELAY: avoid lane</span>
+        <span class="tag good">HELP: shield</span>
+        <span class="tag good">COIN: score</span>
       </div>
 
       <div class="controls">
         <div class="keyRow">
-          <div class="key"><b>A / Left</b> lane</div>
-          <div class="key"><b>D / Right</b> lane</div>
+          <div class="key"><b>A / ←</b> lane left</div>
+          <div class="key"><b>D / →</b> lane right</div>
           <div class="key"><b>Space</b> jump</div>
           <div class="key"><b>Down</b> slide</div>
-          <div class="key"><b>P</b> pause</div>
+          <div class="key"><b>H</b> use shield</div>
         </div>
-        <p class="note">Mobile: swipe left/right to change lane, swipe up to jump, swipe down to slide.</p>
+        <p class="note">Mobile: swipe left/right, swipe up to jump, swipe down to slide.</p>
       </div>
     </main>
   </div>
@@ -53,18 +52,17 @@
     <div class="panel">
       <h2 id="title">Chemo Dash</h2>
       <p id="text" class="overlayText"></p>
-
       <div class="btnRow">
         <button id="playBtn">Play</button>
         <button id="howBtn" class="secondary">How to play</button>
       </div>
-
       <div class="tiny">
-        Goal: survive 60 seconds. Obstacles represent transit, work, and system delays.
+        You are trying to reach chemo on time. Obstacles represent real barriers to care.
       </div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
