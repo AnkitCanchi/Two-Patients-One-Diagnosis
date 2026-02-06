@@ -11,199 +11,187 @@
     <div class="brand">
       <h1>Two Patients, One Diagnosis</h1>
       <p>
-        Same diagnosis. Same care steps. Different support. Click <b>Next Step</b> to advance both patients together.
-        Delays stack. Supports reduce delays, but not everyone has them.
+        Same diagnosis. Same care steps. Different support.
+        Click <b>Next Step</b> to advance both together and watch delays stack.
       </p>
     </div>
 
     <div class="topActions">
-      <button id="nextBtn" class="primary">Next Step</button>
-      <button id="fastBtn" class="ghost" title="Auto-advance until one reaches treatment">Auto Run</button>
-      <button id="resetBtn" class="ghost">Reset</button>
+      <button id="nextBtn" class="primary">Next Step (N)</button>
+      <button id="pauseBtn" class="ghost">Pause</button>
+      <button id="tutorialBtn" class="ghost">Tutorial</button>
+      <button id="resetBtn" class="ghost">Reset (R)</button>
     </div>
   </header>
 
   <main class="layout">
-    <section class="board">
-      <div class="boardTop">
+    <section class="sim">
+      <div class="simTop">
         <div class="pillRow">
-          <span class="pill">Pipeline: <b id="pipelineName">Cancer Care Path</b></span>
-          <span class="pill">Seed: <b id="seedText">-</b></span>
-          <span class="pill">Difficulty: <b id="diffText">Normal</b></span>
-          <span class="pill">Support Budget: <b id="budgetText">6</b></span>
+          <span class="pill">Seed: <span id="seedText">-</span></span>
+          <span class="pill">Auto-resolve: <span id="autoText">ON</span></span>
+          <span class="pill">Countdown: <span id="countdownText">-</span>s</span>
+          <span class="pill">Equity Gap: <span id="gapText">0</span> days</span>
         </div>
 
-        <div class="hint">
-          Tip: Use the budget to apply supports. Policy levers affect both patients.
+        <div class="toggleRow">
+          <label class="switch">
+            <input type="checkbox" id="autoToggle" checked />
+            <span>Auto-resolve events (5s)</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="reduceMotion" />
+            <span>Reduced motion</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="soundToggle" checked />
+            <span>Sound</span>
+          </label>
         </div>
       </div>
 
-      <div class="split">
-        <section class="patient" id="patientA">
-          <div class="patientHead">
-            <div class="avatar a">A</div>
-            <div class="meta">
-              <div class="name">Patient A</div>
-              <div class="tag good">More support</div>
+      <div class="twoCol">
+        <section class="patientCard" id="cardA">
+          <div class="cardHeader">
+            <div class="who">
+              <div class="avatar a">A</div>
+              <div>
+                <div class="name">Patient A</div>
+                <div class="tag good">More support</div>
+              </div>
             </div>
-            <div class="stats">
-              <div class="stat"><div class="k">Days</div><div class="v" id="daysA">0</div></div>
-              <div class="stat"><div class="k">Stress</div><div class="v" id="stressA">0</div></div>
-              <div class="stat"><div class="k">Step</div><div class="v" id="stepA">1/8</div></div>
+
+            <div class="kpis">
+              <div class="kpi"><div class="k">Days</div><div class="v" id="daysA">0</div></div>
+              <div class="kpi"><div class="k">Stress</div><div class="v" id="stressA">0</div></div>
+              <div class="kpi"><div class="k">Step</div><div class="v" id="stepA">-</div></div>
             </div>
           </div>
 
-          <div class="trackWrap">
-            <div class="track">
-              <div class="fill a" id="fillA"></div>
-            </div>
-            <div class="trackLabel" id="stepNameA">Diagnosis Confirmed</div>
+          <div class="progressBox">
+            <div class="track"><div class="fill" id="fillA"></div></div>
+            <div class="hint">Goal: Start Treatment</div>
           </div>
 
-          <div class="cards">
-            <div class="card">
-              <div class="cardTitle">Supports (cost budget)</div>
-              <div class="toggles">
-                <label class="toggle"><input type="checkbox" id="navA" checked /> Patient navigator</label>
-                <label class="toggle"><input type="checkbox" id="rideA" checked /> Reliable transport</label>
-                <label class="toggle"><input type="checkbox" id="leaveA" checked /> Paid sick leave</label>
-                <label class="toggle"><input type="checkbox" id="pharmA" checked /> Pharmacy coordination</label>
-              </div>
-              <div class="mini">Toggles change delay odds and severity.</div>
-            </div>
+          <div class="inventory">
+            <div class="sectionTitle">Support Stickers</div>
+            <div class="chips" id="invA"></div>
+            <div class="smallHint">Spend 1 sticker to cancel a delay (Intervene 1)</div>
+          </div>
 
-            <div class="card">
-              <div class="cardTitle">Spend Support Budget</div>
-              <div class="actionsGrid">
-                <button data-act="appealA" class="smallBtn">File Appeal (A)</button>
-                <button data-act="rideNowA" class="smallBtn">Call Ride (A)</button>
-                <button data-act="paperFixA" class="smallBtn">Fix Paperwork (A)</button>
-                <button data-act="stressCareA" class="smallBtn">Care Break (A)</button>
-              </div>
-              <div class="mini">Each click costs 1 budget. Removes or reduces the next delay.</div>
+          <div class="supports">
+            <div class="sectionTitle">Personal Supports</div>
+            <div class="grid3">
+              <label class="check"><input type="checkbox" id="navA" checked /> Navigator</label>
+              <label class="check"><input type="checkbox" id="rideA" checked /> Reliable Ride</label>
+              <label class="check"><input type="checkbox" id="leaveA" checked /> Paid Leave</label>
             </div>
+          </div>
 
-            <div class="card logCard">
-              <div class="cardTitle">Event Feed</div>
-              <div id="logA" class="log"></div>
-            </div>
+          <div class="log">
+            <div class="sectionTitle">Event Feed</div>
+            <div class="logBody" id="logA"></div>
           </div>
         </section>
 
-        <section class="patient" id="patientB">
-          <div class="patientHead">
-            <div class="avatar b">B</div>
-            <div class="meta">
-              <div class="name">Patient B</div>
-              <div class="tag warn">Limited support</div>
+        <section class="patientCard" id="cardB">
+          <div class="cardHeader">
+            <div class="who">
+              <div class="avatar b">B</div>
+              <div>
+                <div class="name">Patient B</div>
+                <div class="tag warn">Less support</div>
+              </div>
             </div>
-            <div class="stats">
-              <div class="stat"><div class="k">Days</div><div class="v" id="daysB">0</div></div>
-              <div class="stat"><div class="k">Stress</div><div class="v" id="stressB">0</div></div>
-              <div class="stat"><div class="k">Step</div><div class="v" id="stepB">1/8</div></div>
+
+            <div class="kpis">
+              <div class="kpi"><div class="k">Days</div><div class="v" id="daysB">0</div></div>
+              <div class="kpi"><div class="k">Stress</div><div class="v" id="stressB">0</div></div>
+              <div class="kpi"><div class="k">Step</div><div class="v" id="stepB">-</div></div>
             </div>
           </div>
 
-          <div class="trackWrap">
-            <div class="track">
-              <div class="fill b" id="fillB"></div>
-            </div>
-            <div class="trackLabel" id="stepNameB">Diagnosis Confirmed</div>
+          <div class="progressBox">
+            <div class="track"><div class="fill" id="fillB"></div></div>
+            <div class="hint">Goal: Start Treatment</div>
           </div>
 
-          <div class="cards">
-            <div class="card">
-              <div class="cardTitle">Supports (cost budget)</div>
-              <div class="toggles">
-                <label class="toggle"><input type="checkbox" id="navB" /> Patient navigator</label>
-                <label class="toggle"><input type="checkbox" id="rideB" /> Reliable transport</label>
-                <label class="toggle"><input type="checkbox" id="leaveB" /> Paid sick leave</label>
-                <label class="toggle"><input type="checkbox" id="pharmB" /> Pharmacy coordination</label>
-              </div>
-              <div class="mini">Try toggling supports on B and watch the gap shrink.</div>
-            </div>
+          <div class="inventory">
+            <div class="sectionTitle">Support Stickers</div>
+            <div class="chips" id="invB"></div>
+            <div class="smallHint">Spend 1 sticker to cancel a delay (Intervene 2)</div>
+          </div>
 
-            <div class="card">
-              <div class="cardTitle">Spend Support Budget</div>
-              <div class="actionsGrid">
-                <button data-act="appealB" class="smallBtn">File Appeal (B)</button>
-                <button data-act="rideNowB" class="smallBtn">Call Ride (B)</button>
-                <button data-act="paperFixB" class="smallBtn">Fix Paperwork (B)</button>
-                <button data-act="stressCareB" class="smallBtn">Care Break (B)</button>
-              </div>
-              <div class="mini">Budget makes it feel like real triage.</div>
+          <div class="supports">
+            <div class="sectionTitle">Personal Supports</div>
+            <div class="grid3">
+              <label class="check"><input type="checkbox" id="navB" /> Navigator</label>
+              <label class="check"><input type="checkbox" id="rideB" /> Reliable Ride</label>
+              <label class="check"><input type="checkbox" id="leaveB" /> Paid Leave</label>
             </div>
+          </div>
 
-            <div class="card logCard">
-              <div class="cardTitle">Event Feed</div>
-              <div id="logB" class="log"></div>
-            </div>
+          <div class="log">
+            <div class="sectionTitle">Event Feed</div>
+            <div class="logBody" id="logB"></div>
           </div>
         </section>
-      </div>
-
-      <div class="bottomRow">
-        <div class="chartCard">
-          <div class="cardTitle">Timeline (Days Waited)</div>
-          <canvas id="chart" width="900" height="180"></canvas>
-          <div class="mini">Each Next Step updates the timeline. Auto Run makes it demo-friendly.</div>
-        </div>
-
-        <div class="summaryCard">
-          <div class="cardTitle">Round Summary</div>
-          <div id="roundSummary" class="summaryBox">Click Next Step.</div>
-
-          <div class="achievements">
-            <div class="cardTitle">Badges</div>
-            <div id="badges" class="badgeRow"></div>
-          </div>
-
-          <div class="exportRow">
-            <button id="exportBtn" class="ghost">Copy Report JSON</button>
-          </div>
-        </div>
       </div>
     </section>
 
-    <aside class="sidebar">
-      <div class="sideCard">
-        <div class="cardTitle">Settings</div>
+    <aside class="right">
+      <section class="panel">
+        <div class="panelTitle">Current Step</div>
+        <div class="bigStep" id="currentStep">Press Next Step</div>
 
-        <div class="field">
-          <label>Seed (same seed = same run)</label>
-          <input id="seedInput" placeholder="ex: demo123" />
+        <div class="eventBox">
+          <div class="eventTitle">Revealed Event</div>
+          <div class="eventLine" id="eventLine">No event yet.</div>
+          <div class="eventMeta" id="eventMeta"></div>
+
+          <div class="btnRow">
+            <button id="interveneA" class="ghost">Intervene A (1)</button>
+            <button id="interveneB" class="ghost">Intervene B (2)</button>
+          </div>
+          <div class="tiny">
+            Intervene spends 1 Support Sticker to cancel this event for that patient.
+          </div>
         </div>
 
-        <div class="field">
-          <label>Difficulty</label>
-          <input id="diff" type="range" min="1" max="5" value="3" />
-          <div class="mini">1 = easier, 5 = harsher delays</div>
+        <div class="panelTitle">Policy Levers (global)</div>
+        <div class="policyGrid">
+          <label class="check"><input type="checkbox" id="polNavigator" /> Fund patient navigation</label>
+          <label class="check"><input type="checkbox" id="polTransit" /> Transportation vouchers</label>
+          <label class="check"><input type="checkbox" id="polAdmin" /> Reduce paperwork + faster approvals</label>
+          <label class="check"><input type="checkbox" id="polLeave" /> Paid leave protections</label>
+          <label class="check"><input type="checkbox" id="polCapacity" /> Expand clinic capacity</label>
         </div>
 
-        <div class="field">
-          <label>Policy Levers (affect both patients)</label>
-          <label class="toggle"><input type="checkbox" id="polFastAuth" /> Fast-track prior authorization</label>
-          <label class="toggle"><input type="checkbox" id="polTransport" /> Transport voucher program</label>
-          <label class="toggle"><input type="checkbox" id="polNavigator" /> Navigator program expansion</label>
-          <label class="toggle"><input type="checkbox" id="polPharmacy" /> Pharmacy supply coordination</label>
+        <div class="panelTitle">Analytics</div>
+        <div class="chartBox">
+          <canvas id="chart" width="360" height="220"></canvas>
+          <div class="tiny">Shows category days for A vs B (Insurance, Paperwork, Transport, Work, Childcare, Clinic).</div>
         </div>
 
-        <div class="field">
-          <label>Support Budget (per run)</label>
-          <input id="budget" type="number" min="0" max="30" value="6" />
+        <div class="panelTitle">Tools</div>
+        <div class="toolRow">
+          <button id="saveBtn" class="ghost">Save</button>
+          <button id="loadBtn" class="ghost">Load</button>
+          <button id="shareBtn" class="ghost">Copy Share Link</button>
+        </div>
+        <div class="toolRow">
+          <button id="exportBtn" class="ghost">Export Summary</button>
+          <button id="clearBtn" class="ghost">Clear Save</button>
         </div>
 
-        <button id="applySettings" class="primary">Apply Settings</button>
-        <div class="mini">
-          Judges love this: you can demonstrate how policy changes reduce delays.
-        </div>
-      </div>
+        <div class="notice" id="notice">Tip: Press N to advance, 1/2 to intervene.</div>
+      </section>
     </aside>
   </main>
 
   <div class="modal hidden" id="modal" role="dialog" aria-modal="true">
     <div class="modalCard">
-      <h2 id="modalTitle">Treatment Started</h2>
+      <h2 id="modalTitle">Outcome</h2>
       <p id="modalBody"></p>
       <div class="modalBtns">
         <button id="closeModal" class="primary">Close</button>
@@ -212,6 +200,7 @@
     </div>
   </div>
 
+  <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
