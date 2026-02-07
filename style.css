@@ -84,7 +84,6 @@ button:disabled{ opacity:0.45; cursor:not-allowed; }
   gap:12px;
 }
 
-.simTop{ display:flex; flex-direction:column; gap:10px; }
 .pillRow{ display:flex; gap:8px; flex-wrap:wrap; }
 .pill{
   padding:6px 10px;
@@ -95,9 +94,6 @@ button:disabled{ opacity:0.45; cursor:not-allowed; }
   font-weight:900;
   opacity:0.95;
 }
-.toggleRow{ display:flex; gap:14px; flex-wrap:wrap; }
-.switch{ display:flex; gap:8px; align-items:center; font-size:13px; opacity:0.92; }
-.switch input{ transform: translateY(1px); }
 
 .twoCol{
   flex:1;
@@ -192,6 +188,11 @@ button:disabled{ opacity:0.45; cursor:not-allowed; }
 .smallHint{ font-size:12px; opacity:0.75; z-index:1; margin-top:6px; }
 
 .inventory, .supports, .log{ z-index:1; }
+.grid3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:8px; }
+@media (max-width: 980px){ .grid3{ grid-template-columns:1fr; } }
+.check{ display:flex; gap:8px; align-items:center; font-size:13px; opacity:0.92; }
+.check input{ transform: translateY(1px); }
+
 .chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
 .chipCard{
   display:flex; align-items:center; gap:8px;
@@ -209,11 +210,6 @@ button:disabled{ opacity:0.45; cursor:not-allowed; }
   border:2px solid rgba(255,255,255,0.14);
   background: rgba(0,0,0,0.18);
 }
-
-.grid3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:8px; }
-@media (max-width: 980px){ .grid3{ grid-template-columns:1fr; } }
-.check{ display:flex; gap:8px; align-items:center; font-size:13px; opacity:0.92; }
-.check input{ transform: translateY(1px); }
 
 .logBody{
   margin-top:8px;
@@ -266,10 +262,7 @@ button:disabled{ opacity:0.45; cursor:not-allowed; }
 }
 .eventTitle{ font-weight:1000; opacity:0.95; }
 .eventLine{ margin-top:8px; font-weight:1000; }
-.eventMeta{ margin-top:6px; opacity:0.82; font-size:12px; line-height:1.35; }
-
-.btnRow{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
-.tiny{ margin-top:8px; opacity:0.75; font-size:12px; line-height:1.35; }
+.eventMeta{ margin-top:6px; opacity:0.82; font-size:12px; line-height:1.35; white-space: pre-line; }
 
 .policyGrid{ display:grid; gap:8px; margin-top:6px; }
 .chartBox{
@@ -279,7 +272,7 @@ button:disabled{ opacity:0.45; cursor:not-allowed; }
   border:1px solid rgba(255,255,255,0.12);
   background: rgba(0,0,0,0.18);
 }
-.toolRow{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+.tiny{ margin-top:8px; opacity:0.75; font-size:12px; line-height:1.35; }
 .notice{
   margin-top:auto;
   padding:10px;
@@ -290,14 +283,54 @@ button:disabled{ opacity:0.45; cursor:not-allowed; }
   opacity:0.86;
 }
 
+/* ---- Modal split: summary top, slides bottom half ---- */
 .modal{ position:fixed; inset:0; background: rgba(0,0,0,0.62); display:grid; place-items:center; padding:18px; z-index:50; }
 .modal.hidden{ display:none !important; }
+
 .modalCard{
-  width: min(720px, 100%);
+  width: min(980px, 96vw);
+  max-height: 90vh;
   background: rgba(255,255,255,0.10);
   border:1px solid rgba(255,255,255,0.18);
   border-radius:22px;
   padding:16px;
   box-shadow: 0 40px 140px rgba(0,0,0,0.75);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
-.modalBtns{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+
+.modalSplit{
+  flex: 1;
+  min-height: 0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.modalSummary{
+  flex: 0 0 auto;
+  max-height: 42%;
+  overflow:auto;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.18);
+}
+
+.modalSlides{
+  flex: 1;
+  min-height: 0;
+  border-radius: 16px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.18);
+}
+
+.modalSlides iframe{
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.modalBtns{ display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
