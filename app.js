@@ -362,9 +362,6 @@ function reset(){
 
   ui.eventLine.textContent = "No event yet.";
   ui.eventMeta.textContent = "";
-   
-  if (ui.interveneB) ui.interveneB.disabled = true;
-  if (ui.interveneB) ui.interveneB.title = "Locked for Patient B in this simulation";
 
   render();
   ui.notice.textContent = "Tip: Press N to advance, R to reset.";
@@ -477,14 +474,9 @@ function tryLoadFromUrl(){
 function intervene(label){
   if (!state || state.done) return;
 
-  // B can never intervene (keep button visible but locked)
-  if (label === "B"){
-    ui.notice.textContent = "Patient B cannot use interventions in this simulation.";
-    return;
-  }
+  const p = label === "A" ? state.A : state.B;
 
-  const p = state.A; // label must be A here
-
+  // Demo-friendly intervention: remove some accumulated delay and stress
   const beforeDays = p.days;
   const beforeStress = p.stress;
 
@@ -500,7 +492,7 @@ function intervene(label){
     "Real-world supports can reduce delays right away (navigation, transport, approvals)."
   );
 
-  ui.notice.textContent = "Intervention used for Patient A.";
+  ui.notice.textContent = `Intervention used for Patient ${label}.`;
   render();
 }
 
@@ -528,7 +520,6 @@ function wire(){
   // ADDED: Intervene buttons
   if (ui.interveneA) ui.interveneA.addEventListener("click", () => intervene("A"));
   if (ui.interveneB) ui.interveneB.addEventListener("click", () => intervene("B"));
-  if (ui.interveneB) ui.interveneB.disabled = true;
 
   // ADDED: Save/Load/Export/Share
   if (ui.saveBtn) ui.saveBtn.addEventListener("click", () => {
